@@ -1,8 +1,8 @@
 {
-  "name": "backend",
+  "name": "weasley-clock",
   "version": "0.1.0",
   "bin": {
-    "backend": "bin/backend.js"
+    "weasley-clock": "bin/weasley-clock.js"
   },
   "scripts": {
     "build": "tsc",
