@@ -5,6 +5,7 @@
     "weasley-clock": "bin/weasley-clock.js"
   },
   "scripts": {
+    "postinstall": "(cd lambda/interpret-location && npm install);",
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
