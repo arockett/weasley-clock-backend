@@ -9,7 +9,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "sandbox-deploy": "npm run build && npx cdk synth && npx cdk deploy WeasleyClock/* --profile sandbox"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.111.0",
