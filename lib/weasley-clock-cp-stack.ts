@@ -22,6 +22,10 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       tracing: lambda.Tracing.ACTIVE,
       logRetention: logs.RetentionDays.ONE_MONTH
     });
+    locInterpretLambda.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['iot:Publish'],
+      resources: ['arn:aws:iot:us-east-2:682946798041:topic/weasleyclock/*/status']
+    }));
 
     const sendLocUpdatesRule = new iot.CfnTopicRule(this, 'SendLocationUpdatesForInterpretation', {
       topicRulePayload: {
