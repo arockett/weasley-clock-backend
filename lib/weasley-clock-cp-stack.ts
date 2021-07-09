@@ -1,6 +1,7 @@
 import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as iot from '@aws-cdk/aws-iot';
+import * as iam from '@aws-cdk/aws-iam';
 import * as logs from '@aws-cdk/aws-logs';
 import * as path from 'path';
 import { Duration } from '@aws-cdk/core';
@@ -22,7 +23,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       logRetention: logs.RetentionDays.ONE_MONTH
     });
 
-    new iot.CfnTopicRule(this, 'SendLocationUpdatesForInterpretation', {
+    const sendLocUpdatesRule = new iot.CfnTopicRule(this, 'SendLocationUpdatesForInterpretation', {
       topicRulePayload: {
         description: 'Send location messages to Lambda funtion to convert to a weasley clock status',
         sql: 'SELECT topic() as topic, * FROM "owntracks/+/+"',
@@ -33,7 +34,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       }
     });
 
-    new iot.CfnTopicRule(this, 'SendLocationEventsForInterpretation', {
+    const sendLocEventsRule = new iot.CfnTopicRule(this, 'SendLocationEventsForInterpretation', {
       topicRulePayload: {
         description: 'Send transition messages to Lambda function to convert to a weasley clock status',
         sql: 'SELECT topic() as topic, * FROM "owntracks/+/+/event"',
@@ -42,6 +43,19 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
           {lambda: {functionArn: locInterpretLambda.functionArn}}
         ]
       }
+    });
+
+    locInterpretLambda.addPermission('AllowInvokeFromLocUpdates', {
+      action: 'lambda:InvokeFunction',
+      principal: new iam.ServicePrincipal('iot.amazonaws.com'),
+      sourceAccount: '682946798041',
+      sourceArn: `${sendLocUpdatesRule.attrArn}`
+    });
+    locInterpretLambda.addPermission('AllowInvokeFromLocEvents', {
+      action: 'lambda:InvokeFunction',
+      principal: new iam.ServicePrincipal('iot.amazonaws.com'),
+      sourceAccount: '682946798041',
+      sourceArn: `${sendLocUpdatesRule.attrArn}`
     });
   }
 }
