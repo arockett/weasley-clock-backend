@@ -11,11 +11,20 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
     super(scope, id, props);
 
     /*
+     * Define Lambda Layers
+     */
+    const weasleyClockTypesLayer = new lambda.LayerVersion(this, 'WeasleyClockTypes', {
+      compatibleRuntimes: [lambda.Runtime.NODEJS_14_X],
+      code: lambda.Code.fromAsset('src/layers/weasley-clock-types'),
+      description: 'Contains types used by the WeasleyClock App'
+    });
+
+    /*
      * Interpret Raw Location updates as Clock status
      */
     const locInterpretLambda = new lambda.Function(this, 'InterpretLocation', {
       runtime: lambda.Runtime.NODEJS_14_X,
-      code: lambda.Code.fromAsset(path.join(__dirname, '..', 'src', 'lambda', 'interpret-location')),
+      code: lambda.Code.fromAsset('src/lambda/interpret-location'),
       handler: 'index.handler',
       timeout: Duration.seconds(3),
       memorySize: 128,
