@@ -1,7 +1,7 @@
 import { Context } from 'aws-lambda';
 import { IoTDataPlaneClient, PublishCommand } from '@aws-sdk/client-iot-data-plane';
 
-exports.handler =  async function(event: any, context: Context) {
+exports.handler = async function(event: any, context: Context) {
   console.log("EVENT: \n" + JSON.stringify(event, null, 2));
 
   const iotdata = new IoTDataPlaneClient({region: 'us-east-2'});
