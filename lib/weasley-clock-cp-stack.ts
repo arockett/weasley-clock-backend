@@ -30,7 +30,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
     const sendLocUpdatesRule = new iot.CfnTopicRule(this, 'SendLocationUpdatesForInterpretation', {
       topicRulePayload: {
         description: 'Send location messages to Lambda funtion to convert to a weasley clock status',
-        sql: 'SELECT topic() as topic, * FROM "owntracks/+/+"',
+        sql: 'SELECT topic() as topic, * as owntracksMsg FROM "owntracks/+/+"',
         ruleDisabled: false,
         actions: [
           {lambda: {functionArn: locInterpretLambda.functionArn}}
@@ -41,7 +41,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
     const sendLocEventsRule = new iot.CfnTopicRule(this, 'SendLocationEventsForInterpretation', {
       topicRulePayload: {
         description: 'Send transition messages to Lambda function to convert to a weasley clock status',
-        sql: 'SELECT topic() as topic, * FROM "owntracks/+/+/event"',
+        sql: 'SELECT topic() as topic, * as owntracksMsg FROM "owntracks/+/+/event"',
         ruleDisabled: false,
         actions: [
           {lambda: {functionArn: locInterpretLambda.functionArn}}
