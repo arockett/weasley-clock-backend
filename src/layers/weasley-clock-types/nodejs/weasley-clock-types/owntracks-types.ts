@@ -54,13 +54,13 @@ export const isOwntracksTransitionMessage = objectOf({
  */
 export interface OwntracksMessage {
   topic: string,
-  owntracksMsg:
+  body:
     OwntracksLocationMessage |
     OwntracksTransitionMessage
 }
 export const isOwntracksMessage = objectOf({
   topic: primitives.string,
-  owntracksMsg: anyOf(
+  body: anyOf(
     isOwntracksLocationMessage,
     isOwntracksTransitionMessage
   )
