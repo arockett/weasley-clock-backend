@@ -26,6 +26,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_14_X,
       code: lambda.Code.fromAsset('src/lambda/interpret-location'),
       handler: 'index.handler',
+      layers: [weasleyClockTypesLayer],
       timeout: Duration.seconds(3),
       memorySize: 128,
       tracing: lambda.Tracing.ACTIVE,
