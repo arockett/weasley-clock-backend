@@ -1,5 +1,4 @@
 import { anyOf, arrayOf, assertBy, Assertion, enumOf, is, objectOf, primitives, ValidationRejection } from '@altostra/type-validations';
-import { InvalidOwntracksMessageError } from './error-types';
 
 export enum OwntracksMessageType {
   Location = 'location',
@@ -66,10 +65,10 @@ export const isOwntracksMessage = objectOf({
   )
 })
 
-function invalidOwntracksMessageErrorFactory(value: unknown, rejections: ValidationRejection[]): any {
-  return new InvalidOwntracksMessageError('Invalid message', { value, rejections })
-}
 export const validateOwntracksMessage: Assertion<OwntracksMessage> = assertBy(
   isOwntracksMessage,
-  invalidOwntracksMessageErrorFactory
+  (value, rejections) => {
+    console.log(`Input rejections:\n${JSON.stringify(rejections, null, 2)}`);
+    return new Error('Invalid owntracks message');
+  }
 )
