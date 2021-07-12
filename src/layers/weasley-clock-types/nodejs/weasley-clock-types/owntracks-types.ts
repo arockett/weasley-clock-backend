@@ -1,4 +1,4 @@
-import { anyOf, arrayOf, assertBy, Assertion, enumOf, is, objectOf, primitives, ValidationRejection } from '@altostra/type-validations';
+import { anyOf, arrayOf, assertBy, Assertion, enumOf, is, maybe, objectOf, primitives, ValidationRejection } from '@altostra/type-validations';
 
 export enum OwntracksMessageType {
   Location = 'location',
@@ -22,7 +22,7 @@ export const isOwntracksLocationMessage = objectOf({
   lat: primitives.number,
   lon: primitives.number,
   vel: primitives.number,
-  inregions: arrayOf(primitives.maybeString)
+  inregions: maybe(arrayOf(primitives.maybeString))
 })
 
 /*
