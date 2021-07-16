@@ -55,13 +55,16 @@ export function inTransit(msg: OwntracksLocationMessage): boolean {
   return msg.vel >= 3;
 }
 
-export function atAirport(msg: any) {
+export function atAirport(msg: any): boolean {
+  return false;
 }
 
-export function atHospital(msg: any) {
+export function atHospital(msg: any): boolean {
+  return false;
 }
 
-export function inHomeCountry(msg: any) {
+export function inHomeCountry(msg: any): boolean {
+  return false;
 }
 
 export async function publishUserStatus(user: string, status: Status) {
