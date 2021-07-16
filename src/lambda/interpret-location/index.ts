@@ -51,7 +51,8 @@ export function detectStatusFromLocationUpdate(locationUpdate: OwntracksLocation
 export function detectWaypointLable(description: string) {
 }
 
-export function inTransit(msg: any) {
+export function inTransit(msg: OwntracksLocationMessage): boolean {
+  return msg.vel >= 3;
 }
 
 export function atAirport(msg: any) {
