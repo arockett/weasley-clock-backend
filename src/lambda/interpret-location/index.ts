@@ -27,7 +27,7 @@ export async function handler(event: any, context: Context) {
 }
 
 export function getUserFromTopic(topic: string): string {
-  return 'rockettman';
+  return topic.split('/')[1];
 }
 
 export function detectStatusFromOwntracksMsg(msg: OwntracksMessage): Status {
