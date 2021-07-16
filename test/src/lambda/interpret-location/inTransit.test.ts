@@ -1,20 +1,6 @@
 import { OwntracksLocationMessage, OwntracksMessageType } from 'src/layers/weasley-clock-types/nodejs/weasley-clock-types/owntracks-types';
-import * as interpretLoc from '../../../src/lambda/interpret-location';
+import * as interpretLoc from 'src/lambda/interpret-location';
 
-/*
- * getUserFromTopic
- */
-test('getUserFromTopic extracts user string from owntracks topic', () => {
-  // WHEN
-  const user = 'USER';
-  const topic = `owntracks/${user}/device`;
-  // THEN
-  expect(interpretLoc.getUserFromTopic(topic)).toBe(user);
-});
-
-/*
- * inTransit
- */
 test('inTransit is True when velocity > 3', () => {
   // WHEN
   const msg: OwntracksLocationMessage = {
