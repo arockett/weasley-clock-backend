@@ -69,7 +69,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       action: 'lambda:InvokeFunction',
       principal: new iam.ServicePrincipal('iot.amazonaws.com'),
       sourceAccount: '682946798041',
-      sourceArn: `${sendLocUpdatesRule.attrArn}`
+      sourceArn: `${sendLocEventsRule.attrArn}`
     });
   }
 }
