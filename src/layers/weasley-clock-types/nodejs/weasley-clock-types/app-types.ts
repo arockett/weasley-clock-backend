@@ -3,20 +3,20 @@ export enum Status {
   /*
    * Commented out status are on the roadmap ;)
    */
-  Home,
-  InTransit,
-  Out,
-  //Abroad,
-  //Lost,
+  Home = "HOME",
+  InTransit = "IN_TRANSIT",
+  Out = "OUT",
+  //Abroad = "ABROAD",
+  //Lost = "LOST",
 
-  //Friends,
-  //Family,
-  //Work,
-  //Gym,
-  //HappyPlace,
+  //Friends = "FRIENDS",
+  //Family = "FAMILY",
+  //Work = "WORK",
+  //Gym = "GYM",
+  //HappyPlace = "HAPPY_PLACE",
 
-  //Airport,
-  //Hospital
+  //Airport = "AIRPORT",
+  //Hospital = "HOSPITAL"
 }
 
 export interface StatusUpdateMessage {
