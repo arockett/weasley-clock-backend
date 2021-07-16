@@ -18,3 +18,8 @@ export enum Status {
   //Airport,
   //Hospital
 }
+
+export interface StatusUpdateMessage {
+  user: string,
+  status: Status
+}
