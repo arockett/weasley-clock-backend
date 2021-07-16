@@ -1,4 +1,13 @@
-import { anyOf, arrayOf, assertBy, Assertion, enumOf, is, maybe, objectOf, primitives, ValidationRejection } from '@altostra/type-validations';
+import {
+  anyOf,
+  arrayOf,
+  assertBy,
+  Assertion,
+  enumOf,
+  is,
+  maybe,
+  objectOf,
+  primitives } from '@altostra/type-validations';
 
 export enum OwntracksMessageType {
   Location = 'location',
@@ -8,7 +17,7 @@ export enum OwntracksMessageType {
 /*
  * _type = 'location'
  */
-export interface OwntracksLocationMessage extends OwntracksMessage {
+export interface OwntracksLocationMessage {
   _type: OwntracksMessageType.Location,
   tst: number,
   lat: number,
@@ -22,7 +31,7 @@ export const isOwntracksLocationMessage = objectOf({
   lat: primitives.number,
   lon: primitives.number,
   vel: primitives.number,
-  inregions: maybe(arrayOf(primitives.maybeString))
+  inregions: maybe(arrayOf(primitives.string))
 })
 
 /*
@@ -32,7 +41,7 @@ export enum OwntracksTransitionEvent {
   Enter = 'enter',
   Leave = 'leave'
 }
-export interface OwntracksTransitionMessage extends OwntracksMessage {
+export interface OwntracksTransitionMessage {
   _type: OwntracksMessageType.Transition,
   tst: number,
   event: OwntracksTransitionEvent,
