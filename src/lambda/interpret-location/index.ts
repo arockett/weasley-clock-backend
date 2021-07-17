@@ -2,6 +2,7 @@ import { Context } from 'aws-lambda';
 import { IoTDataPlaneClient, PublishCommand } from '@aws-sdk/client-iot-data-plane';
 import {
   isOwntracksLocationMessage,
+  isOwntracksLwtMessage,
   isOwntracksTransitionMessage,
   OwntracksLocationMessage,
   OwntracksMessage,
@@ -30,8 +31,13 @@ export async function handler(event: any, context: Context) {
 
   const owntracksMsg: OwntracksMessage = event;
 
+  if(isOwntracksLwtMessage(owntracksMsg.body)) {
+    console.log(`Ignoring LWT message:\n${JSON.stringify(owntracksMsg, null, 2)}`);
+    return
+  }
+
   const user = getUserFromTopic(owntracksMsg.topic);
-  const status: Status = detectStatusFromOwntracksMsg(owntracksMsg);
+  const status: Status = detectStatusFromOwntracksMsg(owntracksMsg.body);
 
   return await publishUserStatus(user, status);
 }
@@ -40,13 +46,13 @@ export function getUserFromTopic(topic: string): string {
   return topic.split('/')[1];
 }
 
-export function detectStatusFromOwntracksMsg(msg: OwntracksMessage): Status {
-  if (isOwntracksTransitionMessage(msg.body)) {
-    return detectStatusFromTransitionEvent(msg.body);
-  } else if (isOwntracksLocationMessage(msg.body)) {
-    return detectStatusFromLocationUpdate(msg.body)
+export function detectStatusFromOwntracksMsg(msg: OwntracksLocationMessage | OwntracksTransitionMessage): Status {
+  if (isOwntracksTransitionMessage(msg)) {
+    return detectStatusFromTransitionEvent(msg);
+  } else if (isOwntracksLocationMessage(msg)) {
+    return detectStatusFromLocationUpdate(msg)
   } else {
-    throw new Error(`Unable to detect status from owntracks message:\n${JSON.stringify(msg.body, null, 2)}`);
+    throw new Error(`Unable to detect status from owntracks message:\n${JSON.stringify(msg, null, 2)}`);
   }
 }
 

@@ -11,7 +11,8 @@ import {
 
 export enum OwntracksMessageType {
   Location = 'location',
-  Transition = 'transition'
+  Transition = 'transition',
+  Lwt = 'lwt'
 }
 
 /*
@@ -58,19 +59,33 @@ export const isOwntracksTransitionMessage = objectOf({
 })
 
 /*
+ * _type = 'lwt'
+ */
+export interface OwntracksLwtMessage {
+  _type: OwntracksMessageType.Lwt,
+  tst: number
+}
+export const isOwntracksLwtMessage = objectOf({
+  _type: is(OwntracksMessageType.Lwt),
+  tst: primitives.number
+})
+
+/*
  * Any Owntracks message
  */
 export interface OwntracksMessage {
   topic: string,
   body:
     OwntracksLocationMessage |
-    OwntracksTransitionMessage
+    OwntracksTransitionMessage |
+    OwntracksLwtMessage
 }
 export const isOwntracksMessage = objectOf({
   topic: primitives.string,
   body: anyOf(
     isOwntracksLocationMessage,
-    isOwntracksTransitionMessage
+    isOwntracksTransitionMessage,
+    isOwntracksLwtMessage
   )
 })
 
