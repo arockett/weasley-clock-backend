@@ -41,6 +41,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       topicRulePayload: {
         description: 'Send location messages to Lambda funtion to convert to a weasley clock status',
         sql: 'SELECT topic() as topic, * as body FROM "owntracks/+/+"',
+        awsIotSqlVersion: '2016-03-23',
         ruleDisabled: false,
         actions: [
           {lambda: {functionArn: locInterpretLambda.functionArn}}
@@ -52,6 +53,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       topicRulePayload: {
         description: 'Send transition messages to Lambda function to convert to a weasley clock status',
         sql: 'SELECT topic() as topic, * as body FROM "owntracks/+/+/event"',
+        awsIotSqlVersion: '2016-03-23',
         ruleDisabled: false,
         actions: [
           {lambda: {functionArn: locInterpretLambda.functionArn}}
