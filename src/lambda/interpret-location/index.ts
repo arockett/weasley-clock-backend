@@ -60,7 +60,7 @@ export function detectStatusFromTransitionEvent(transitionEvent: OwntracksTransi
 }
 
 export function detectStatusFromLocationUpdate(locationUpdate: OwntracksLocationMessage): Status {
-  if (locationUpdate.inregions !== undefined) {
+  if (locationUpdate.inregions !== undefined && locationUpdate.inregions.length >= 1) {
     const waypointLabel = detectWaypointLable(locationUpdate.inregions[0]);
     return Status[waypointLabel];
   } else if (atAirport({})) {
