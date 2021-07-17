@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-iot-data-plane": "^3.20.0"
+    "@aws-sdk/client-iot-data-plane": "^3.20.0",
+    "@aws-sdk/client-location": "^3.22.0"
   }
 }
