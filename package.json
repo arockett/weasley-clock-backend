@@ -9,7 +9,7 @@
     "build": "tsc",
     "clean": "tsc --build --clean",
     "watch": "tsc -w",
-    "test": "jest",
+    "test": "npm run build && jest",
     "cdk": "cdk",
     "sandbox-deploy": "npm run build && npx cdk synth && npx cdk deploy WeasleyClock/* --profile sandbox"
   },
