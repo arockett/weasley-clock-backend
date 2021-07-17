@@ -5,6 +5,7 @@ import {
   isOwntracksTransitionMessage,
   OwntracksLocationMessage,
   OwntracksMessage,
+  OwntracksTransitionEvent,
   OwntracksTransitionMessage,
   Status,
   StatusUpdateMessage,
@@ -50,11 +51,29 @@ export function detectStatusFromOwntracksMsg(msg: OwntracksMessage): Status {
 }
 
 export function detectStatusFromTransitionEvent(transitionEvent: OwntracksTransitionMessage): Status {
-  return Status.Home;
+  const waypointLabel = detectWaypointLable(transitionEvent.desc);
+  if (transitionEvent.event == OwntracksTransitionEvent.Enter) {
+    return Status[waypointLabel];
+  } else {
+    return Status.InTransit;
+  }
 }
 
 export function detectStatusFromLocationUpdate(locationUpdate: OwntracksLocationMessage): Status {
-  return Status.Out;
+  if (locationUpdate.inregions !== undefined) {
+    const waypointLabel = detectWaypointLable(locationUpdate.inregions[0]);
+    return Status[waypointLabel];
+  } else if (atAirport({})) {
+    return Status.Airport;
+  } else if (atHospital({})) {
+    return Status.Hospital;
+  } else if (!inHomeCountry({})) {
+    return Status.Abroad;
+  } else if (inTransit(locationUpdate)) {
+    return Status.InTransit;
+  } else {
+    return Status.Out;
+  }
 }
 
 export function detectWaypointLable(description: string): WaypointLabel {
@@ -99,7 +118,7 @@ export function atHospital(msg: any): boolean {
 }
 
 export function inHomeCountry(msg: any): boolean {
-  return false;
+  return true;
 }
 
 export async function publishUserStatus(user: string, status: Status) {

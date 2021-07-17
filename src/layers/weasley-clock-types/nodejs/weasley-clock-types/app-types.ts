@@ -3,20 +3,20 @@ export enum Status {
   /*
    * Commented out status are on the roadmap ;)
    */
-  Home = "HOME",
-  InTransit = "IN_TRANSIT",
-  Out = "OUT",
-  //Abroad = "ABROAD",
-  //Lost = "LOST",
+  Home = "Home",
+  InTransit = "InTransit",
+  Out = "Out",
+  Abroad = "Abroad",
+  //Lost = "Lost",
 
-  Friends = "FRIENDS",
-  Family = "FAMILY",
-  Work = "WORK",
-  Gym = "GYM",
-  HappyPlace = "HAPPY_PLACE",
+  Friends = "Friends",
+  Family = "Family",
+  Work = "Work",
+  Gym = "Gym",
+  HappyPlace = "HappyPlace",
 
-  //Airport = "AIRPORT",
-  //Hospital = "HOSPITAL"
+  Airport = "Airport",
+  Hospital = "Hospital"
 }
 
 export interface StatusUpdateMessage {
@@ -25,10 +25,10 @@ export interface StatusUpdateMessage {
 }
 
 export enum WaypointLabel {
-  Home = "HOME",
-  Friends = "FRIENDS",
-  Family = "FAMILY",
-  Work = "WORK",
-  Gym = "GYM",
-  HappyPlace = "HAPPY_PLACE"
+  Home = "Home",
+  Friends = "Friends",
+  Family = "Family",
+  Work = "Work",
+  Gym = "Gym",
+  HappyPlace = "HappyPlace"
 }
