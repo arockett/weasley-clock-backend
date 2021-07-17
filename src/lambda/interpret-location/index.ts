@@ -8,10 +8,14 @@ import {
   OwntracksTransitionMessage,
   Status,
   StatusUpdateMessage,
-  validateOwntracksMessage } from '/opt/nodejs/weasley-clock-types';
+  validateOwntracksMessage,
+  WaypointLabel} from '/opt/nodejs/weasley-clock-types';
 
 
 const IoTDATA = new IoTDataPlaneClient({region: 'us-east-2'});
+
+const HOME_LABELS = ['home', 'house'];
+
 
 export async function handler(event: any, context: Context) {
   console.log("EVENT: \n" + JSON.stringify(event, null, 2));
@@ -48,7 +52,23 @@ export function detectStatusFromLocationUpdate(locationUpdate: OwntracksLocation
   return Status.Out;
 }
 
-export function detectWaypointLable(description: string) {
+export function detectWaypointLable(description: string): WaypointLabel {
+
+  const descriptionStartsWithAnyOf = (prefixes: string[]) => {
+    return startsWithAnyOf(description.toLowerCase(), prefixes);
+  }
+
+  if(descriptionStartsWithAnyOf(HOME_LABELS)) {
+    return WaypointLabel.Home
+  } else {
+    throw new Error(`Can't detect WaypointLabel for [${description}]`);
+  }
+}
+
+function startsWithAnyOf(target: string, prefixes: string[]): boolean {
+  return prefixes.some(prefix => {
+    return target.startsWith(prefix);
+  });
 }
 
 export function inTransit(msg: OwntracksLocationMessage): boolean {

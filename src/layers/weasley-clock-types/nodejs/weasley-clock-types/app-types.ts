@@ -23,3 +23,15 @@ export interface StatusUpdateMessage {
   user: string,
   status: Status
 }
+
+export enum WaypointLabel {
+  /*
+   * Commented out labels are on the roadmap ;)
+   */
+  Home = "HOME",
+  // Friends = "FRIENDS",
+  // Family = "FAMILY",
+  // Work = "WORK",
+  // Gym = "GYM",
+  // HappyPlace = "HAPPY_PLACE"
+}
