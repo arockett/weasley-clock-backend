@@ -9,11 +9,11 @@ export enum Status {
   //Abroad = "ABROAD",
   //Lost = "LOST",
 
-  //Friends = "FRIENDS",
-  //Family = "FAMILY",
-  //Work = "WORK",
-  //Gym = "GYM",
-  //HappyPlace = "HAPPY_PLACE",
+  Friends = "FRIENDS",
+  Family = "FAMILY",
+  Work = "WORK",
+  Gym = "GYM",
+  HappyPlace = "HAPPY_PLACE",
 
   //Airport = "AIRPORT",
   //Hospital = "HOSPITAL"
@@ -25,13 +25,10 @@ export interface StatusUpdateMessage {
 }
 
 export enum WaypointLabel {
-  /*
-   * Commented out labels are on the roadmap ;)
-   */
   Home = "HOME",
-  // Friends = "FRIENDS",
-  // Family = "FAMILY",
-  // Work = "WORK",
-  // Gym = "GYM",
-  // HappyPlace = "HAPPY_PLACE"
+  Friends = "FRIENDS",
+  Family = "FAMILY",
+  Work = "WORK",
+  Gym = "GYM",
+  HappyPlace = "HAPPY_PLACE"
 }

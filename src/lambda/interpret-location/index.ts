@@ -15,6 +15,11 @@ import {
 const IoTDATA = new IoTDataPlaneClient({region: 'us-east-2'});
 
 const HOME_LABELS = ['home', 'house'];
+const FRIENDS_LABELS = ['friend'];
+const FAMILY_LABELS = ['family'];
+const WORK_LABLES = ['work', 'office'];
+const GYM_LABLES = ['gym'];
+const HAPPY_PLACE_LABLES = ['happy place'];
 
 
 export async function handler(event: any, context: Context) {
@@ -55,11 +60,21 @@ export function detectStatusFromLocationUpdate(locationUpdate: OwntracksLocation
 export function detectWaypointLable(description: string): WaypointLabel {
 
   const descriptionStartsWithAnyOf = (prefixes: string[]) => {
-    return startsWithAnyOf(description.toLowerCase(), prefixes);
+    return startsWithAnyOf(description.toLowerCase().replace(/^the /, ''), prefixes);
   }
 
-  if(descriptionStartsWithAnyOf(HOME_LABELS)) {
+  if (descriptionStartsWithAnyOf(HOME_LABELS)) {
     return WaypointLabel.Home
+  } else if (descriptionStartsWithAnyOf(FRIENDS_LABELS)) {
+    return WaypointLabel.Friends
+  } else if (descriptionStartsWithAnyOf(FAMILY_LABELS)) {
+    return WaypointLabel.Family
+  } else if (descriptionStartsWithAnyOf(WORK_LABLES)) {
+    return WaypointLabel.Work
+  } else if (descriptionStartsWithAnyOf(GYM_LABLES)) {
+    return WaypointLabel.Gym
+  } else if (descriptionStartsWithAnyOf(HAPPY_PLACE_LABLES)) {
+    return WaypointLabel.HappyPlace
   } else {
     throw new Error(`Can't detect WaypointLabel for [${description}]`);
   }
