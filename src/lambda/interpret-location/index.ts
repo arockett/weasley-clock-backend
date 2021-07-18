@@ -144,7 +144,7 @@ async function publishUserStatus(user: string, status: Status) {
     }));
     console.log(`[SUCCESS] Published status update:\n${JSON.stringify(response, null, 2)}`);
   } catch (err) {
-    console.log(err, err.stack);
+    console.error(err, err.stack);
     throw new Error("Failed to publish status update");
   }
 }

@@ -28,7 +28,7 @@ export async function reverseGeocode(lon: number, lat: number): Promise<ReverseG
     console.log(`[SUCCESS] Reverse geocoded position:\n${JSON.stringify(response, null, 2)}`);
     return new ReverseGeocodeResult(response);
   } catch (err) {
-    console.log(`[WARNING] Reverse geocoding failed:\n${JSON.stringify(err, null, 2)}`, err.stack);
+    console.warn(`Reverse geocoding failed:\n${JSON.stringify(err, null, 2)}`, err.stack);
     return new ReverseGeocodeResult();
   }
 }
