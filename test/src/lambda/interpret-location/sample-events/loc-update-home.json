@@ -1,0 +1,22 @@
+{
+  "topic": "owntracks/rockettman/pixel4a",
+  "body": {
+    "_type": "location",
+    "acc": 13,
+    "alt": 1618,
+    "batt": 52,
+    "bs": 1,
+    "conn": "m",
+    "created_at": 1626559456,
+    "inregions": [
+      "Home"
+    ],
+    "lat": 40.0144411,
+    "lon": -105.2820683,
+    "t": "u",
+    "tid": "77",
+    "tst": 1626559456,
+    "vac": 3,
+    "vel": 0
+  }
+}

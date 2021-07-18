@@ -1,0 +1,15 @@
+{
+  "topic": "owntracks/rockettman/pixel4a/event",
+  "body": {
+    "_type": "transition",
+    "acc": 18.255,
+    "desc": "Home",
+    "event": "enter",
+    "lat": 40.0220044,
+    "lon": -105.2589947,
+    "t": "l",
+    "tid": "77",
+    "tst": 1626627452,
+    "wtst": 1626627435
+  }
+}
