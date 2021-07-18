@@ -62,7 +62,7 @@ export function detectStatusFromTransitionEvent(transitionEvent: OwntracksTransi
   if (transitionEvent.event == OwntracksTransitionEvent.Enter) {
     return Status[waypointLabel];
   } else {
-    return Status.InTransit;
+    return Status.Traveling;
   }
 }
 
@@ -84,8 +84,8 @@ export async function detectStatusFromLocationUpdate(locationUpdate: OwntracksLo
     return Status.Hospital;
   } else if (place.country != place.UnknownCountry && place.country != homeCountry) {
     return Status.Abroad;
-  } else if (inTransit(locationUpdate)) {
-    return Status.InTransit;
+  } else if (isTraveling(locationUpdate)) {
+    return Status.Traveling;
   } else {
     return Status.Out;
   }
@@ -120,7 +120,7 @@ function startsWithAnyOf(target: string, prefixes: string[]): boolean {
   });
 }
 
-export function inTransit(msg: OwntracksLocationMessage): boolean {
+export function isTraveling(msg: OwntracksLocationMessage): boolean {
   return msg.vel >= 3;
 }
 

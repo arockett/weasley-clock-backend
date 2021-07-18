@@ -4,7 +4,7 @@ export enum Status {
    * Commented out status are on the roadmap ;)
    */
   Home = "Home",
-  InTransit = "InTransit",
+  Traveling = "Traveling",
   Out = "Out",
   Abroad = "Abroad",
   //Lost = "Lost",

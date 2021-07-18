@@ -11,7 +11,7 @@ test('inTransit is True when velocity > 3', () => {
     vel: 5
   };
   // THEN
-  expect(interpretLoc.inTransit(msg)).toBeTruthy();
+  expect(interpretLoc.isTraveling(msg)).toBeTruthy();
 });
 
 test('inTransit is True when velocity = 3', () => {
@@ -24,7 +24,7 @@ test('inTransit is True when velocity = 3', () => {
     vel: 3
   };
   // THEN
-  expect(interpretLoc.inTransit(msg)).toBeTruthy();
+  expect(interpretLoc.isTraveling(msg)).toBeTruthy();
 });
 
 test('inTransit is False when velocity < 3', () => {
@@ -37,5 +37,5 @@ test('inTransit is False when velocity < 3', () => {
     vel: 2
   };
   // THEN
-  expect(interpretLoc.inTransit(msg)).toBeFalsy();
+  expect(interpretLoc.isTraveling(msg)).toBeFalsy();
 });
