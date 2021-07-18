@@ -9,3 +9,11 @@ test('Has Database', () => {
     // THEN
     expectCDK(stack).to(haveResource('AWS::DynamoDB::Table'));
 });
+
+test('Has Place Index', () => {
+    const app = new cdk.App();
+    //WHEN
+    const stack = new WeasleyClockInfStack(app, 'MyTestStack');
+    // THEN
+    expectCDK(stack).to(haveResource('AWS::Location::PlaceIndex'));
+});
