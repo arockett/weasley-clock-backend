@@ -14,6 +14,8 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props: WeasleyClockControlPlaneStackProps) {
     super(scope, id, props);
 
+    const placeIndex = props.infStack.placeIndex;
+
     /*
      * Define Lambda Layers
      */
@@ -32,7 +34,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       handler: 'index.handler',
       layers: [weasleyClockTypesLayer],
       environment: {
-        "PLACE_INDEX_NAME": props.infStack.placeIndex.indexName
+        "PLACE_INDEX_NAME": placeIndex.indexName
       },
       timeout: Duration.seconds(3),
       memorySize: 128,
@@ -42,6 +44,10 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
     locInterpretLambda.addToRolePolicy(new iam.PolicyStatement({
       actions: ['iot:Publish'],
       resources: ['arn:aws:iot:us-east-2:682946798041:topic/weasleyclock/*/status']
+    }));
+    locInterpretLambda.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['geo:SearchPlaceIndexForPosition'],
+      resources: [placeIndex.attrIndexArn]
     }));
 
     const sendLocUpdatesRule = new iot.CfnTopicRule(this, 'SendLocationUpdatesForInterpretation', {
