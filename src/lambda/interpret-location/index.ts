@@ -73,7 +73,7 @@ export async function detectStatusFromLocationUpdate(locationUpdate: OwntracksLo
   }
 
   // Get user's home country
-  const homeCountry = 'US';
+  const homeCountry = 'USA';
 
   // Reverse geocode position
   const place = await reverseGeocode(locationUpdate.lon, locationUpdate.lat);

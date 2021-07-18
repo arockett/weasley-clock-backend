@@ -1,16 +1,17 @@
-import { LocationClient, SearchPlaceIndexForPositionCommand, SearchPlaceIndexForPositionCommandOutput } from '@aws-sdk/client-location';
+import { LocationClient, SearchForPositionResult, SearchPlaceIndexForPositionCommand, SearchPlaceIndexForPositionCommandOutput } from '@aws-sdk/client-location';
 
 const LOCATION = new LocationClient({region: 'us-east-2'});
 
 
 export class ReverseGeocodeResult {
   readonly UnknownCountry: string = 'UNKNOWN';
-  readonly country: string = this.UnknownCountry;
-  readonly atAirport: boolean = false;
-  readonly atHospital: boolean = false;
+  country: string = this.UnknownCountry;
+  atAirport: boolean = false;
+  atHospital: boolean = false;
 
   constructor(rawResponse?: SearchPlaceIndexForPositionCommandOutput) {
-    if (rawResponse !== undefined) {
+    if (rawResponse !== undefined && rawResponse.Results !== undefined && rawResponse.Results.length >= 1) {
+      this.country = rawResponse.Results[0].Place?.Country ?? this.UnknownCountry
     }
   }
 }
