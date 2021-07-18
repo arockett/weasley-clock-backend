@@ -12,6 +12,7 @@ import {
   StatusUpdateMessage,
   validateOwntracksMessage,
   WaypointLabel} from '/opt/nodejs/weasley-clock-types';
+import { reverseGeocode } from './reverse-geocode';
 
 
 const IoTDATA = new IoTDataPlaneClient({region: 'us-east-2'});
@@ -37,7 +38,7 @@ export async function handler(event: any, context: Context) {
   }
 
   const user = getUserFromTopic(owntracksMsg.topic);
-  const status: Status = detectStatusFromOwntracksMsg(owntracksMsg.body);
+  const status: Status = await detectStatusFromOwntracksMsg(owntracksMsg.body);
 
   return await publishUserStatus(user, status);
 }
@@ -46,7 +47,7 @@ export function getUserFromTopic(topic: string): string {
   return topic.split('/')[1];
 }
 
-export function detectStatusFromOwntracksMsg(msg: OwntracksLocationMessage | OwntracksTransitionMessage): Status {
+export async function detectStatusFromOwntracksMsg(msg: OwntracksLocationMessage | OwntracksTransitionMessage): Promise<Status> {
   if (isOwntracksTransitionMessage(msg)) {
     return detectStatusFromTransitionEvent(msg);
   } else if (isOwntracksLocationMessage(msg)) {
@@ -65,15 +66,23 @@ export function detectStatusFromTransitionEvent(transitionEvent: OwntracksTransi
   }
 }
 
-export function detectStatusFromLocationUpdate(locationUpdate: OwntracksLocationMessage): Status {
+export async function detectStatusFromLocationUpdate(locationUpdate: OwntracksLocationMessage): Promise<Status> {
   if (locationUpdate.inregions !== undefined && locationUpdate.inregions.length >= 1) {
     const waypointLabel = detectWaypointLable(locationUpdate.inregions[0]);
     return Status[waypointLabel];
-  } else if (atAirport({})) {
+  }
+
+  // Get user's home country
+  const homeCountry = 'US';
+
+  // Reverse geocode position
+  const place = await reverseGeocode(locationUpdate.lon, locationUpdate.lat);
+
+  if (place.atAirport) {
     return Status.Airport;
-  } else if (atHospital({})) {
+  } else if (place.atHospital) {
     return Status.Hospital;
-  } else if (!inHomeCountry({})) {
+  } else if (place.country != place.UnknownCountry && place.country != homeCountry) {
     return Status.Abroad;
   } else if (inTransit(locationUpdate)) {
     return Status.InTransit;
@@ -115,19 +124,10 @@ export function inTransit(msg: OwntracksLocationMessage): boolean {
   return msg.vel >= 3;
 }
 
-export function atAirport(msg: any): boolean {
-  return false;
-}
-
-export function atHospital(msg: any): boolean {
-  return false;
-}
-
-export function inHomeCountry(msg: any): boolean {
-  return true;
-}
-
-export async function publishUserStatus(user: string, status: Status) {
+/*
+ * Impure functions, they talk to the dirty outside world!
+ */
+async function publishUserStatus(user: string, status: Status) {
   const payload: StatusUpdateMessage = {
     user: user,
     status: status
