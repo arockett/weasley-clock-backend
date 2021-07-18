@@ -4,9 +4,14 @@ import * as iot from '@aws-cdk/aws-iot';
 import * as iam from '@aws-cdk/aws-iam';
 import * as logs from '@aws-cdk/aws-logs';
 import { Duration } from '@aws-cdk/core';
+import { WeasleyClockInfStack } from './weasley-clock-inf-stack';
+
+export interface WeasleyClockControlPlaneStackProps extends cdk.StackProps {
+  readonly infStack: WeasleyClockInfStack;
+}
 
 export class WeasleyClockControlPlaneStack extends cdk.Stack {
-  constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: cdk.Construct, id: string, props: WeasleyClockControlPlaneStackProps) {
     super(scope, id, props);
 
     /*
@@ -26,6 +31,9 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       code: lambda.Code.fromAsset('src/lambda/interpret-location'),
       handler: 'index.handler',
       layers: [weasleyClockTypesLayer],
+      environment: {
+        "PLACE_INDEX_NAME": props.infStack.placeIndex.indexName
+      },
       timeout: Duration.seconds(3),
       memorySize: 128,
       tracing: lambda.Tracing.ACTIVE,
