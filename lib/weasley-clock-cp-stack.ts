@@ -3,7 +3,6 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as iot from '@aws-cdk/aws-iot';
 import * as iam from '@aws-cdk/aws-iam';
 import * as logs from '@aws-cdk/aws-logs';
-import * as path from 'path';
 import { Duration } from '@aws-cdk/core';
 
 export class WeasleyClockControlPlaneStack extends cdk.Stack {
