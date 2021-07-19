@@ -52,3 +52,13 @@ test('ReverseGeocodeResult.country set correctly', () => {
   // THEN
   expect(reverseGeocodeResult.country).toBe('USA');
 })
+
+test('ReverseGeocodeResult.atAirport set correctly', () => {
+  // WHEN
+  let serviceResult = resultTemplate();
+  // @ts-ignore: Don't mess with null checking to simplify reusing object template
+  serviceResult.Results[0].Place.Label = "Denver Int'l Airport, 8500 Pena Blvd, Denver, CO, 80249, USA";
+  const reverseGeocodeResult = new ReverseGeocodeResult(serviceResult);
+  // THEN
+  expect(reverseGeocodeResult.atAirport).toBeTruthy();
+})

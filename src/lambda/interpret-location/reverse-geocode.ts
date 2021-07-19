@@ -12,7 +12,21 @@ export class ReverseGeocodeResult {
   constructor(rawResponse?: SearchPlaceIndexForPositionCommandOutput) {
     if (rawResponse !== undefined && rawResponse.Results !== undefined && rawResponse.Results.length >= 1) {
       this.country = rawResponse.Results[0].Place?.Country ?? this.UnknownCountry
+      rawResponse.Results.forEach(result => {
+        if (placeIsAirport(result)) {
+          this.atAirport = true;
+        }
+      });
     }
+  }
+}
+
+function placeIsAirport(placeResult: SearchForPositionResult): boolean {
+  const address = placeResult.Place?.Label?.toLowerCase() ?? ""
+  if (address.search('airport') != -1) {
+    return true;
+  } else {
+    return false;
   }
 }
 
