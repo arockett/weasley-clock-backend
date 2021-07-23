@@ -25,6 +25,8 @@
     "typescript": "~4.3.5"
   },
   "dependencies": {
+    "@aws-cdk/aws-codepipeline": "1.115.0",
+    "@aws-cdk/aws-codepipeline-actions": "1.115.0",
     "@aws-cdk/aws-dynamodb": "1.115.0",
     "@aws-cdk/aws-iam": "1.115.0",
     "@aws-cdk/aws-iot": "1.115.0",
