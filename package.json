@@ -5,11 +5,11 @@
     "weasley-clock": "bin/weasley-clock.js"
   },
   "scripts": {
-    "postinstall": "(cd src/layers/weasley-clock-types/nodejs/weasley-clock-types && npm install); (cd src/lambda/interpret-location && npm install);",
+    "postinstall": "(cd src/layers/weasley-clock-types/nodejs/weasley-clock-types && npm ci); (cd src/lambda/interpret-location && npm ci);",
     "build": "tsc",
     "clean": "tsc --build --clean",
     "watch": "tsc -w",
-    "test": "npm run build && jest",
+    "test": "jest",
     "cdk": "cdk",
     "sandbox-deploy": "npm run build && npx cdk synth && npx cdk deploy WeasleyClock/* --profile sandbox"
   },
