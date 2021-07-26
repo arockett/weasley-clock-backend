@@ -43,7 +43,7 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
     });
     locInterpretLambda.addToRolePolicy(new iam.PolicyStatement({
       actions: ['iot:Publish'],
-      resources: ['arn:aws:iot:us-east-2:682946798041:topic/weasleyclock/*/status']
+      resources: [`arn:aws:iot:${this.region}:${this.account}:topic/weasleyclock/*/status`]
     }));
     locInterpretLambda.addToRolePolicy(new iam.PolicyStatement({
       actions: ['geo:SearchPlaceIndexForPosition'],
@@ -77,13 +77,13 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
     locInterpretLambda.addPermission('AllowInvokeFromLocUpdates', {
       action: 'lambda:InvokeFunction',
       principal: new iam.ServicePrincipal('iot.amazonaws.com'),
-      sourceAccount: '682946798041',
+      sourceAccount: `${this.account}`,
       sourceArn: `${sendLocUpdatesRule.attrArn}`
     });
     locInterpretLambda.addPermission('AllowInvokeFromLocEvents', {
       action: 'lambda:InvokeFunction',
       principal: new iam.ServicePrincipal('iot.amazonaws.com'),
-      sourceAccount: '682946798041',
+      sourceAccount: `${this.account}`,
       sourceArn: `${sendLocEventsRule.attrArn}`
     });
   }
