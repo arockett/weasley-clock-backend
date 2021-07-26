@@ -6,14 +6,18 @@ export class WeasleyClock extends cdk.Stage {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StageProps) {
     super(scope, id, props);
 
-    const infStack = new WeasleyClockInfStack(this, 'Inf', {
-      terminationProtection: false
-    });
-
-    const cpStack = new WeasleyClockControlPlaneStack(this, 'ControlPlane', {
-      infStack: infStack
-    });
-
-    cpStack.addDependency(infStack);
+    defineWeasleyClockResources(this, props);
   }
+}
+
+export function defineWeasleyClockResources(scope: cdk.Construct, props?: cdk.StageProps) {
+  const infStack = new WeasleyClockInfStack(scope, 'Inf', {
+    terminationProtection: false
+  });
+
+  const cpStack = new WeasleyClockControlPlaneStack(scope, 'ControlPlane', {
+    infStack: infStack
+  });
+
+  cpStack.addDependency(infStack);
 }

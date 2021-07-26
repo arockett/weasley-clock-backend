@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
-import { defineWeasleyClockResources } from '../lib/weasley-clock';
+import { WeasleyClockPipeline } from '../lib/pipeline-stack';
 
 const app = new cdk.App();
 
-defineWeasleyClockResources(app);
+new WeasleyClockPipeline(app, 'WeasleyClockPipeline');

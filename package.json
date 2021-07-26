@@ -4,6 +4,9 @@
   "bin": {
     "weasley-clock": "bin/weasley-clock.js"
   },
+  "config": {
+    "pipelineCDKApp": "npx ts-node --prefer-ts-exts bin/pipeline.ts"
+  },
   "scripts": {
     "postinstall": "(cd src/layers/weasley-clock-types/nodejs/weasley-clock-types && npm ci); (cd src/lambda/interpret-location && npm ci);",
     "build": "tsc",
@@ -11,7 +14,9 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "sandbox-deploy": "npm run build && npx cdk synth && npx cdk deploy WeasleyClock/* --profile sandbox"
+    "sandbox-deploy": "npm run build && npx cdk synth && npx cdk deploy --profile sandbox",
+    "pipeline-synth": "npx cdk synth --app '$npm_package_config_pipelineCDKApp'",
+    "pipeline-deploy": "npx cdk deploy --app '$npm_package_config_pipelineCDKApp' --profile pipelines"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.115.0",
