@@ -8,7 +8,7 @@
     "pipelineCDKApp": "npx ts-node --prefer-ts-exts bin/pipeline.ts"
   },
   "scripts": {
-    "postinstall": "(cd src/layers/weasley-clock-types/nodejs/weasley-clock-types && npm ci); (cd src/lambda/interpret-location && npm ci);",
+    "postinstall": "(cd src/layers/weasley-clock-types/nodejs/weasley-clock-types && npm ci); (cd src/layers/weasley-clock-db/nodejs/weasley-clock-db && npm ci); (cd src/lambda/interpret-location && npm ci);",
     "build": "tsc",
     "clean": "tsc --build --clean",
     "watch": "tsc -w",

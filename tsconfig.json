@@ -18,6 +18,7 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
     "resolveJsonModule": true,
     "typeRoots": [
@@ -25,7 +26,8 @@
     ],
     "baseUrl": "./",
     "paths": {
-      "/opt/nodejs/weasley-clock-types": ["src/layers/weasley-clock-types/nodejs/weasley-clock-types"]
+      "/opt/nodejs/weasley-clock-types": ["src/layers/weasley-clock-types/nodejs/weasley-clock-types"],
+      "/opt/nodejs/weasley-clock-db": ["src/layers/weasley-clock-db/nodejs/weasley-clock-db"]
     }
   },
   "exclude": [
