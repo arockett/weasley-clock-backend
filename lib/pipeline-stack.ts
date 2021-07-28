@@ -30,8 +30,7 @@ export class WeasleyClockPipeline extends cdk.Stack {
         sourceArtifact: sourceArtifact,
         cloudAssemblyArtifact: cloudAssemblyArtifact,
 
-        // Use this if you need a build step (if you're not using ts-node
-        // or if you have TypeScript Lambdas that need to be compiled).
+        installCommand: 'npm i -g npm && npm ci',
         buildCommand: 'npm run build',
         testCommands: ['npm run test'],
         synthCommand: 'npm run pipeline-synth'
