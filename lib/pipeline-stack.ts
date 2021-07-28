@@ -25,6 +25,7 @@ export class WeasleyClockPipeline extends cdk.Stack {
         // Replace these with your actual GitHub project info
         owner: 'arockett',
         repo: 'weasley-clock-backend',
+        branch: 'master'
       }),
 
       synthAction: SimpleSynthAction.standardNpmSynth({
