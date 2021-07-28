@@ -14,8 +14,8 @@ import {
   WaypointLabel} from '/opt/nodejs/weasley-clock-types';
 import { reverseGeocode } from './reverse-geocode';
 
-
-const IoTDATA = new IoTDataPlaneClient({region: 'us-east-2'});
+const AWS_REGION = process.env.AWS_REGION ?? 'us-east-2';
+const IoTDATA = new IoTDataPlaneClient({region: AWS_REGION});
 
 const HOME_LABELS = ['home', 'house'];
 const FRIENDS_LABELS = ['friend'];

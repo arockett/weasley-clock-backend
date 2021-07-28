@@ -1,6 +1,8 @@
 import { LocationClient, SearchForPositionResult, SearchPlaceIndexForPositionCommand, SearchPlaceIndexForPositionCommandOutput } from '@aws-sdk/client-location';
 
-const LOCATION = new LocationClient({region: 'us-east-2'});
+
+const AWS_REGION = process.env.AWS_REGION ?? 'us-east-2';
+const LOCATION = new LocationClient({region: AWS_REGION});
 
 
 export class ReverseGeocodeResult {
