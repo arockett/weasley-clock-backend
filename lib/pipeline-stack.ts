@@ -1,8 +1,9 @@
 import * as cdk from '@aws-cdk/core';
 import { CdkPipeline, SimpleSynthAction } from '@aws-cdk/pipelines';
-
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
+
+import { WeasleyClock } from './weasley-clock';
 
 
 export class WeasleyClockPipeline extends cdk.Stack {
@@ -36,5 +37,9 @@ export class WeasleyClockPipeline extends cdk.Stack {
         synthCommand: 'npm run pipeline-synth'
       }),
     });
+
+    pipeline.addApplicationStage(new WeasleyClock(this, 'Test', {
+      env: {account: '820215762992', region: 'us-east-2'}
+    }));
   }
 }
