@@ -11,11 +11,12 @@ export class WeasleyClock extends cdk.Stage {
 }
 
 export function defineWeasleyClockResources(scope: cdk.Construct, props?: cdk.StageProps) {
-  const infStack = new WeasleyClockInfStack(scope, 'Inf', {
+
+  const infStack = new WeasleyClockInfStack(scope, 'WeasleyClock-Inf', {
     terminationProtection: false
   });
 
-  const cpStack = new WeasleyClockControlPlaneStack(scope, 'ControlPlane', {
+  const cpStack = new WeasleyClockControlPlaneStack(scope, 'WeasleyClock-ControlPlane', {
     infStack: infStack
   });
 

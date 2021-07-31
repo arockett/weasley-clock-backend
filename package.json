@@ -14,7 +14,7 @@
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
-    "sandbox-deploy": "npm run build && npx cdk synth && npx cdk deploy WeasleyClock/* --profile sandbox",
+    "sandbox-deploy": "npm run build && npx cdk synth && npx cdk deploy --all --profile sandbox",
     "pipeline-synth": "npx cdk synth --app '$npm_package_config_pipelineCDKApp'",
     "pipeline-diff": "npx cdk diff --app '$npm_package_config_pipelineCDKApp' --profile pipelines",
     "pipeline-deploy": "npx cdk deploy --app '$npm_package_config_pipelineCDKApp' --profile pipelines"
