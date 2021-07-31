@@ -26,7 +26,6 @@ const HAPPY_PLACE_LABLES = ['happy place'];
 
 
 export async function handler(event: any, context: Context) {
-  console.log("EVENT: \n" + JSON.stringify(event, null, 2));
 
   validateOwntracksMessage(event);
 

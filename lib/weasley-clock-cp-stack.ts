@@ -110,6 +110,14 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
       logRetention: logs.RetentionDays.ONE_MONTH
     });
 
+    const iotCloudWatchRole = new iam.Role(this, 'IoTCloudWatchRole', {
+      assumedBy: new iam.ServicePrincipal('iot.amazonaws.com')
+    });
+    iotCloudWatchRole.addToPolicy(new iam.PolicyStatement({
+      actions: ['cloudwatch:PutMetricData'],
+      resources: ['*']
+    }));
+
     const routeStatusUpdatesRule = new iot.CfnTopicRule(this, 'RouteStatusUpdates', {
       topicRulePayload: {
         description: 'Route clock status updates to Lambda to update clock device shadows',
@@ -117,7 +125,20 @@ export class WeasleyClockControlPlaneStack extends cdk.Stack {
         awsIotSqlVersion: '2016-03-23',
         ruleDisabled: false,
         actions: [
-          {lambda: {functionArn: updateClocksLambda.functionArn}}
+          {
+            lambda: {
+              functionArn: updateClocksLambda.functionArn
+            }
+          },
+          {
+            cloudwatchMetric: {
+              metricName: 'UserStatus-${user}-${status}',
+              metricNamespace: 'WeasleyClock',
+              metricUnit: 'None',
+              metricValue: '1',
+              roleArn: iotCloudWatchRole.roleArn
+            }
+          }
         ]
       }
     });
